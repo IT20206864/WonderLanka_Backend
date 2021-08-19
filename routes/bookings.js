@@ -96,12 +96,13 @@ router.route("/update/:tourid").put(async (req, res) => {
     });
 });
 
+//delete bookings when a user unregsiters
 router.route("/delete/:username").delete(async (req, res) => {
   let username = req.params.username;
 
-  Booking.findOneAndDelete({ username })
+  Booking.deleteMany({ username })
     .then(() => {
-      res.json("deleted booking");
+      res.json("deleted bookings");
     })
     .catch((err) => {
       console.log(err);
