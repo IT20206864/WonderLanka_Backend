@@ -32,6 +32,7 @@ const assignedDriversRouter = require("./routes/assignedDrivers.js");
 const assignedGuidesRouter = require("./routes/assignedGuides.js");
 const assignedVehiclesRouter = require("./routes/assignedVehicles.js");
 const usersRouter = require("./routes/users.js");
+const unregUserRouter = require("./routes/unregisteredUsers");
 
 const { connect } = require("mongodb");
 
@@ -40,6 +41,7 @@ app.use("/assignedDrivers", assignedDriversRouter);
 app.use("/assignedGuides", assignedGuidesRouter);
 app.use("/assignedVehicles", assignedVehiclesRouter);
 app.use("/users", usersRouter);
+app.use("/unregUser", unregUserRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
