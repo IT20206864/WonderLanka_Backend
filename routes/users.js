@@ -87,9 +87,9 @@ router.route("/delete/:username").delete(async (req, res) => {
 router.route("/changepwd/:username").put(async (req, res) => {
   let username = req.params.username;
 
-  const newpwd = req.body.newpwd;
+  const newpwd = req.body;
 
-  console.log(username);
+  console.log(req.body);
 
   await User.findOneAndUpdate({ username }, newpwd)
     .then(() => {
