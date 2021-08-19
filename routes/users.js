@@ -56,12 +56,12 @@ router.route("/get/:username").get((req, res) => {
     });
 });
 
-router.route("/update").put(async (req, res) => {
-  const updates = req.body.updates;
+router.route("/update/:username").put(async (req, res) => {
+  const updates = req.body;
 
-  let username = updates.username;
+  let username = req.params.username;
 
-  console.log(username);
+  console.log(username, req.body);
 
   await User.findOneAndUpdate({ username }, updates)
     .then(() => {
@@ -84,4 +84,19 @@ router.route("/delete/:username").delete(async (req, res) => {
     });
 });
 
+router.route("/changepwd/:username").put(async (req, res) => {
+  let username = req.params.username;
+
+  const newpwd = req.body.newpwd;
+
+  console.log(username);
+
+  await User.findOneAndUpdate({ username }, newpwd)
+    .then(() => {
+      res.json("Password updated!");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 module.exports = router;
