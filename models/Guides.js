@@ -2,41 +2,16 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const guideSchema = new Schema({
-
-    GuideID : {
-        type : String,
-        required : true
-    },
-    FirstName : {
-        type : String,
-        required : true
-    },
-    LastName : {
-        type: String,
-        required : true
-    },
-    Email : {
-        type: String,
-        required: true
-    },
-    TelNumber : {
-        type : Number,
-        required : true
-    },
-    GuideLicenseNo : {
-        type : String,
-        required : true
-    },
-    ForeignLanguage : {
-        type : String,
-        required : true
-    }
-
-
+const guidesSchema = new Schema({
+  guideID: { type: String,  required : true },
+  fName: { type: String , required : true},
+  lName: { type: String, required : true },
+  email: { type: String, required : true },
+  telNo: { type: String , required : true},
+  licenseID: { type: String , required : true},
+  foreignLang: { type: String, required : true },
 });
 
-const Guide = mongoose.model("guides","guideSchema");
+const Guides = mongoose.model("guide", guidesSchema);
 
-module.exports = Guide;
-
+module.exports = Guides;
