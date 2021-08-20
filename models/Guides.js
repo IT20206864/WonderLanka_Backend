@@ -3,13 +3,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const guidesSchema = new Schema({
-  guideID: { type: String },
-  fName: { type: String },
-  lName: { type: String },
-  email: { type: String },
-  telNo: { type: String },
-  licenseID: { type: String },
-  foreignLang: { type: String },
+  guideID: { type: String,  required : true },
+  fName: { type: String , required : true},
+  lName: { type: String, required : true },
+  email: { type: String, required : true },
+  telNo: { type: String , required : true},
+  licenseID: { type: String , required : true},
+  foreignLang: { type: String, required : true },
 });
 
 const Guides = mongoose.model("guide", guidesSchema);
