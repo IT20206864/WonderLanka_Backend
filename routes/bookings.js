@@ -1,8 +1,23 @@
 const router = require("express").Router();
 let Booking = require("../models/Booking");
 
-router.route("/add").post((req, res) => {
-  let tourId = "T" + Math.floor(Math.random() * 9999);
+router.route("/add").post(async (req, res) => {
+  let tourId;
+  let loop = true;
+  while (loop) {
+    tourId = "T" + Math.floor(10000 + Math.random() * 90000);
+    await Booking.exists({ tourId })
+      .then((data) => {
+        loop = data;
+        console.log(loop);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  console.log(tourId);
+
   const {
     username,
     fullName,
@@ -11,6 +26,7 @@ router.route("/add").post((req, res) => {
     email,
     arrivalDate,
     itinerary,
+    customziedItinerary,
     insurance,
     iclass,
     noOfAdults,
@@ -19,8 +35,6 @@ router.route("/add").post((req, res) => {
     payment,
     bookingDate,
   } = req.body.bookingDetails;
-
-  console.log(tourId);
 
   const newBooking = new Booking({
     tourId,
@@ -31,6 +45,7 @@ router.route("/add").post((req, res) => {
     email,
     arrivalDate,
     itinerary,
+    customziedItinerary,
     insurance,
     iclass,
     noOfAdults,
@@ -40,7 +55,7 @@ router.route("/add").post((req, res) => {
     bookingDate,
   });
 
-  console.log(newBooking);
+  console.log(customziedItinerary);
 
   newBooking
     .save()
@@ -52,8 +67,8 @@ router.route("/add").post((req, res) => {
     });
 });
 
-router.route("/").get((req, res) => {
-  Booking.find()
+router.route("/").get(async (req, res) => {
+  await Booking.find()
     .then((bookings) => {
       res.json(bookings);
     })
