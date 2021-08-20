@@ -103,3 +103,5 @@ router.route("/get:id").get((req,res)=>{
         res.status(500).send({status = "Fetching unsuccesful!"});
     })
 })
+
+module.exports = router;
