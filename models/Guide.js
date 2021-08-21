@@ -36,7 +36,7 @@ const guideSchema = new Schema({
 
 });
 
-const Guide = mongoose.model("guides","guideSchema");
+const Guide = mongoose.model("guide", guideSchema);
 
 module.exports = Guide;
 

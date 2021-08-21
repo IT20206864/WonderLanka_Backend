@@ -1,18 +1,18 @@
 const router = require("express").Router();
 
-let Guide = require("../models/Guides");
+let Guide = require("../models/Guide");
 
 
 
 //Adding Guide to the Database.
 
 router.route("/add").post((req,res) => {
-    const {guideID , fName , lName , email , telNo , licenseID , foreignLang } = req.body,
+    const {guideID , fName , lName , email , telNo , licenseID , foreignLang } = req.body;
 
     const newGuide = new Guide({
         guideID,
-        fname,
-        lname,
+        fName,
+        lName,
         email,
         telNo,
         licenseID,

@@ -95,12 +95,12 @@ router.route("/delete:id").delete(async(req,res) =>{
 
 //Fetch one Itinerary Detail
 
-router.route("/get:id").get((req,res)=>{
+router.route("/get:id").get(async(req,res)=>{
     const itinerary = req.params.id;
     const itin = await Itinerary.findById(itinerary).then(()=>{
-        res.status(200).send({status = "Fetched Itinerary Details" , data = itin});
+        res.status(200).send({status : "Fetched Itinerary Details" , data : itin});
     }).catch((err)=>{
-        res.status(500).send({status = "Fetching unsuccesful!"});
+        res.status(500).send({status : "Fetching unsuccesful!"});
     })
 })
 
