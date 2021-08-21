@@ -12,6 +12,7 @@ const guidesSchema = new Schema({
   foreignLang: { type: String, required : true },
 });
 
-const Guides = mongoose.model("guide", guidesSchema);
+const Guide = mongoose.model("guide", guideSchema);
 
-module.exports = Guides;
+module.exports = Guide;
+

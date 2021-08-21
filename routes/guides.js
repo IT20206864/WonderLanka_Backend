@@ -1,27 +1,26 @@
 const router = require("express").Router();
 
-let Guide = require("../models/Guides");
+let Guide = require("../models/Guide");
 
 //Adding Guide to the Database.
 
-router.route("/add").post((req, res) => {
-  const { guideID, fName, lName, email, telNo, licenseID, foreignLang } =
-    req.body;
+router.route("/add").post((req,res) => {
+    const {guideID , fName , lName , email , telNo , licenseID , foreignLang } = req.body;
 
-  const newGuide = new Guide({
-    guideID,
-    fName,
-    lName,
-    email,
-    telNo,
-    licenseID,
-    foreignLang,
-  });
+    const newGuide = new Guide({
+        guideID,
+        fName,
+        lName,
+        email,
+        telNo,
+        licenseID,
+        foreignLang
+    })
 
-  newGuide
-    .save()
-    .then(() => {
-      res.json("Student Added");
+    newGuide.save().then(()=>{
+        res.json("Student Added")
+    }).catch((err) =>{
+        console.log(err);
     })
     .catch((err) => {
       console.log(err);
