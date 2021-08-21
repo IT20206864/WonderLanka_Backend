@@ -12,6 +12,7 @@ const bookingsSchema = new Schema({
   fullName: { type: String },
   insurance: { type: String },
   itinerary: { type: String },
+  customziedItinerary: { type: String },
   mobileNo: { type: String },
   noOfAdults: { type: Number },
   noOfKids18: { type: Number },
