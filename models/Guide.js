@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const guidesSchema = new Schema({
+const guideSchema = new Schema({
+
   guideID: { type: String,  required : true },
   fName: { type: String , required : true},
   lName: { type: String, required : true },
