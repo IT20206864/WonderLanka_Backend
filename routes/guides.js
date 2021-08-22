@@ -4,23 +4,27 @@ let Guide = require("../models/Guide");
 
 //Adding Guide to the Database.
 
-router.route("/add").post((req,res) => {
-    const {guideID , fName , lName , email , telNo , licenseID , foreignLang } = req.body;
+router.route("/add").post((req, res) => {
+  const { guideID, fName, lName, email, telNo, licenseID, foreignLang } =
+    req.body;
 
-    const newGuide = new Guide({
-        guideID,
-        fName,
-        lName,
-        email,
-        telNo,
-        licenseID,
-        foreignLang
+  const newGuide = new Guide({
+    guideID,
+    fName,
+    lName,
+    email,
+    telNo,
+    licenseID,
+    foreignLang,
+  });
+
+  newGuide
+    .save()
+    .then(() => {
+      res.json("Student Added");
     })
-
-    newGuide.save().then(()=>{
-        res.json("Student Added")
-    }).catch((err) =>{
-        console.log(err);
+    .catch((err) => {
+      console.log(err);
     })
     .catch((err) => {
       console.log(err);
@@ -89,7 +93,7 @@ router.route("/get/:id").get(async (req, res) => {
   let guideId = req.params.id;
   const guide = await Guide.findById(guideId)
     .then(() => {
-      res.status(200).send({ status: "Guide Fetched", data: guide });
+      res.status(200).send({ status: "Guide Fetched" });
     })
     .catch((err) => {
       console.log(err.message);

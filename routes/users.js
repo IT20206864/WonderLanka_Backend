@@ -61,7 +61,7 @@ router.route("/update/:username").put(async (req, res) => {
 
   let username = req.params.username;
 
-  console.log(username, req.body);
+  console.log(updates);
 
   await User.findOneAndUpdate({ username }, updates)
     .then(() => {
@@ -94,6 +94,18 @@ router.route("/changepwd/:username").put(async (req, res) => {
   await User.findOneAndUpdate({ username }, newpwd)
     .then(() => {
       res.json("Password updated!");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.route("/check/:username").get(async (req, res) => {
+  const username = req.params.username;
+  await User.exists({ username })
+    .then((data) => {
+      res.json(data);
+      console.log(data);
     })
     .catch((err) => {
       console.log(err);
