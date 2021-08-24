@@ -3,6 +3,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const itinerarySchema = new Schema({
+    
+    itineraryId : {
+        type : String,
+        required : true
+    },
+
+    itineraryDays : {
+        type : String,
+        required : true
+
+    },
+    
     itineraryName : {
         type : String,
         required: true
@@ -16,12 +28,12 @@ const itinerarySchema = new Schema({
 
     itineraryImage : {
         type : String,
-        required : true
+        
     },
 
     itineraryCoverImage : {
         type : String,
-        required : true
+        
     },
 
     itineraryClass : {

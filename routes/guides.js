@@ -18,7 +18,7 @@ router.route("/add").post((req,res) => {
     })
 
     newGuide.save().then(()=>{
-        res.json("Student Added")
+        res.json("Guide Added")
     }).catch((err) =>{
         console.log(err);
     })
@@ -68,6 +68,7 @@ router.route("/update/:id").put(async (req, res) => {
 
 //Deleting a Guide
 
+
 router.route("/delete/:id").delete(async (req, res) => {
   let guideID = req.params.id;
   console.log(guideID);
@@ -88,8 +89,9 @@ router.route("/delete/:id").delete(async (req, res) => {
 router.route("/get/:id").get(async (req, res) => {
   let guideId = req.params.id;
   const guide = await Guide.findById(guideId)
-    .then(() => {
-      res.status(200).send({ status: "Guide Fetched", data: guide });
+    .then((data) => {
+      res.json(data);
+      
     })
     .catch((err) => {
       console.log(err.message);

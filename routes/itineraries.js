@@ -8,7 +8,7 @@ let Itinerary = require("../models/Itineraries");
 
 const storage = multer.diskStorage({
     destination : (req,file,callback) =>{
-        callback(null,"../images/");
+        callback(null,"./images/");
     },
     filename : (req,file,callback) =>{
         callback(null, file.originalname);
@@ -17,17 +17,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage:storage});
 //Adding Itinerary
-router.route("/add" , upload.single("image") , upload.single("coverImage")).post((req,res) =>{
+router.post("/add" , upload.single("itineraryImage") , upload.single("itineraryCoverImage") , (req,res) =>{
     
 
     const newItinerary = new Itinerary({
-        name : req.body.name,
-        description : req.body.description,
-        image : req.file.image,
-        coverImage : req.file.coverImage,
-        classIt : req.body.classIt,
-        priceAdult : req.body.priceAdult,
-        priceChild : req.body.priceChild
+
+        itineraryId : req.body.itineraryId,
+        itineraryDays : req.body.itineraryDays,
+        itineraryName : req.body.itineraryName,
+        itineraryDesc : req.body.itineraryDesc,
+        itineraryImage : req.file.originalname,
+        itineraryCoverImage : req.file.originalname,
+        itineraryClass : req.body.itineraryClass,
+        itineraryPriceAdult : req.body.itineraryPriceAdult,
+        itineraryPriceChild : req.body.itineraryPriceChild
 
     })
 
@@ -49,25 +52,29 @@ router.route("/").get((req,res)=>{
 
 //Updating Itinerary Details
 
-router.route("/update:id" ,upload.single("image") , upload.single("coverImage")).put(async (req,res) =>{
+router.route("/update/:id" ,upload.single("itineraryImage") , upload.single("itineraryCoverImage")).put(async (req,res) =>{
     const itinerary = req.params.id;
 
-        const name =  req.body.name;
-        const description = req.body.description;
-        const image = req.file.image;
-        const coverImage = req.file.coverImage;
-        const classIt = req.body.classIt;
-        const priceAdult = req.body.priceAdult;
-        const priceChild = req.body.priceChild;
+    const itineraryId = req.body.itineraryId;
+    const itineraryDays = req.body.itineraryDays;
+    const itineraryName = req.body.itineraryName;
+    const itineraryDesc = req.body.itineraryDesc;
+    const itineraryImage = req.file.originalname;
+    const itineraryCoverImage = req.file.originalname;
+    const itineraryClass = req.body.itineraryClass;
+    const itineraryPriceAdult = req.body.itineraryPriceAdult;
+    const itineraryPriceChild = req.body.itineraryPriceChild;
 
         const itineraryDetails = {
-            name,
-            description,
-            image,
-            coverImage,
-            classIt,
-            priceAdult,
-            priceChild,
+            itineraryId,
+            itineraryDays,
+            itineraryName,
+            itineraryDesc, 
+            itineraryImage, 
+            itineraryCoverImage, 
+            itineraryClass, 
+            itineraryPriceAdult,
+            itineraryPriceChild 
         }
 
         const update = await Itinerary.findByIdAndUpdate(itinerary,itineraryDetails).then((req,res)=>{
@@ -95,10 +102,10 @@ router.route("/delete:id").delete(async(req,res) =>{
 
 //Fetch one Itinerary Detail
 
-router.route("/get:id").get(async(req,res)=>{
+router.route("/get/:id").get(async(req,res)=>{
     const itinerary = req.params.id;
-    const itin = await Itinerary.findById(itinerary).then(()=>{
-        res.status(200).send({status : "Fetched Itinerary Details" , data : itin});
+    const itin = await Itinerary.findById(itinerary).then((data)=>{
+        res.json(data);
     }).catch((err)=>{
         res.status(500).send({status : "Fetching unsuccesful!"});
     })
