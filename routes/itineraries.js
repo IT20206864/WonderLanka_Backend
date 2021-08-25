@@ -88,7 +88,7 @@ router.route("/update/:id" ,upload.single("itineraryImage") , upload.single("iti
 
 //Deleting Itinerary Details
 
-router.route("/delete:id").delete(async(req,res) =>{
+router.route("/delete/:id").delete(async(req,res) =>{
     
     const itinerary = req.params.id;
     await Itinerary.findByIdAndDelete(itinerary).then(()=>{
