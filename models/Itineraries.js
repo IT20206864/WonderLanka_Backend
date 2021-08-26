@@ -47,7 +47,7 @@ const itinerarySchema = new Schema({
     },
 
     itineraryPriceChild : {
-        type : Number,
+        type : String,
         required : true
     }
 
