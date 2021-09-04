@@ -26,7 +26,7 @@ const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("Mongo DB connection success!");
 });
-
+const driversRouter=require("./routes/drivers.js");
 const bookingsRouter = require("./routes/bookings.js");
 const assignedDriversRouter = require("./routes/assignedDrivers.js");
 const assignedGuidesRouter = require("./routes/assignedGuides.js");
@@ -37,6 +37,7 @@ const guidesRouter = require("./routes/guides");
 const itinerariesRouter = require("./routes/itineraries");
 const { connect } = require("mongodb");
 
+app.use("/drivers",driversRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/assignedDrivers", assignedDriversRouter);
 app.use("/assignedGuides", assignedGuidesRouter);
