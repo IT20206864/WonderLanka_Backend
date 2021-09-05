@@ -12,6 +12,7 @@ const PORT = process.env.port || 8070;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
 
 const URL = process.env.MONGODB_URL;
 
@@ -35,7 +36,13 @@ const usersRouter = require("./routes/users.js");
 const unregUserRouter = require("./routes/unregisteredUsers");
 const guidesRouter = require("./routes/guides");
 const itinerariesRouter = require("./routes/itineraries");
+
+const vehiclesRouter = require('./routes/vehicles');
+const typesRouter = require('./routes/types');
 const { connect } = require("mongodb");
+
+app.use('/vehicles', vehiclesRouter);
+app.use('/types', typesRouter);
 
 app.use("/drivers",driversRouter);
 app.use("/bookings", bookingsRouter);
