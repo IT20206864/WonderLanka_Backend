@@ -28,12 +28,12 @@ const itinerarySchema = new Schema({
 
     itineraryImage : {
         type : String,
-        
+        required : true
     },
 
     itineraryCoverImage : {
         type : String,
-        
+        required : true
     },
 
     itineraryClass : {

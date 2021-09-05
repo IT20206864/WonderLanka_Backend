@@ -16,8 +16,14 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage:storage});
+
+
+
 //Adding Itinerary
-router.post("/add" , upload.single("itineraryImage") , upload.single("itineraryCoverImage") , (req,res) =>{
+router.post("/add" , upload.fields([
+    { name : 'itineraryImage', maxCount: 1 },
+    { name : 'itineraryCoverImage', maxCount: 1 },
+  ]),(req,res) =>{
     
 
     const newItinerary = new Itinerary({
@@ -26,8 +32,8 @@ router.post("/add" , upload.single("itineraryImage") , upload.single("itineraryC
         itineraryDays : req.body.itineraryDays,
         itineraryName : req.body.itineraryName,
         itineraryDesc : req.body.itineraryDesc,
-        itineraryImage : req.file.originalname,
-        itineraryCoverImage : req.file.originalname,
+        itineraryImage : req.files.itineraryImage[0].originalname,
+        itineraryCoverImage : req.files.itineraryCoverImage[0].originalname,
         itineraryClass : req.body.itineraryClass,
         itineraryPriceAdult : req.body.itineraryPriceAdult,
         itineraryPriceChild : req.body.itineraryPriceChild
@@ -52,7 +58,10 @@ router.route("/").get((req,res)=>{
 
 //Updating Itinerary Details
 
-router.route("/update/:id" ,upload.single("itineraryImage") , upload.single("itineraryCoverImage")).put(async (req,res) =>{
+router.route("/update/:id" ,upload.fields([
+    { name: 'itineraryImage', maxCount: 1 },
+    { name: 'itineraryCoverImage', maxCount: 1 },
+  ])).put(async (req,res) =>{
     const itinerary = req.params.id;
 
     const itineraryId = req.body.itineraryId;

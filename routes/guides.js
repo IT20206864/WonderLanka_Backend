@@ -4,27 +4,26 @@ let Guide = require("../models/Guide");
 
 //Adding Guide to the Database.
 
-router.route("/add").post((req,res) => {
-    const {guideID , fName , lName , email , telNo , licenseID , foreignLang } = req.body;
-
-    const newGuide = new Guide({
-        guideID,
-        fName,
-        lName,
-        email,
-        telNo,
-        licenseID,
-        foreignLang
-    })
+router.route("/add").post((req, res) => {
+  const { guideID, fName, lName, email, telNo, licenseID, foreignLang } =
+    req.body;
 
     newGuide.save().then(()=>{
         res.json("Guide Added")
     }).catch((err) =>{
         console.log(err);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const newGuide = new Guide({
+    guideID,
+    fName,
+    lName,
+    email,
+    telNo,
+    licenseID,
+    foreignLang,
+  });
+
+
+  });
 });
 
 //Viewing Guide Details
