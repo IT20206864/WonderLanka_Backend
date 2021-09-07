@@ -12,6 +12,7 @@ const PORT = process.env.port || 8070;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json());
 
 const URL = process.env.MONGODB_URL;
 
@@ -26,7 +27,7 @@ const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("Mongo DB connection success!");
 });
-
+const driversRouter=require("./routes/drivers.js");
 const bookingsRouter = require("./routes/bookings.js");
 const assignedDriversRouter = require("./routes/assignedDrivers.js");
 const assignedGuidesRouter = require("./routes/assignedGuides.js");
@@ -36,9 +37,18 @@ const unregUserRouter = require("./routes/unregisteredUsers");
 const guidesRouter = require("./routes/guides");
 const itinerariesRouter = require("./routes/itineraries");
 const hotelRoute =require('./routes/posts');
+
+
+
+
+const vehiclesRouter = require('./routes/vehicles');
+const typesRouter = require('./routes/types');
 const { connect } = require("mongodb");
 
+app.use('/vehicles', vehiclesRouter);
+app.use('/types', typesRouter);
 
+app.use("/drivers",driversRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/assignedDrivers", assignedDriversRouter);
 app.use("/assignedGuides", assignedGuidesRouter);
