@@ -124,4 +124,19 @@ router.route("/delete/:username").delete(async (req, res) => {
     });
 });
 
+router.route("/update/username/:username").put(async (req, res) => {
+  let oldUsername = req.params.username;
+  console.log(oldUsername);
+
+  const username = req.body;
+  console.log(username);
+  await Booking.updateMany({ username: oldUsername }, username)
+    .then(() => {
+      res.json("updated successfully!");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
 module.exports = router;
