@@ -1,22 +1,23 @@
 const router = require("express").Router();
 let Complaint  = require("../models/Complaints");
+const { json } = require("express");
 
 //////////////////////////////////////////////////////////Add Complaint(create)////////////////////////////////////////////////
 
 router.route("/addComplaint").post((req,res)=>{
 
     const name = req.body.name;
-    const email = req.body.age;
+    const email = req.body.email;
     const contact = Number(req.body.contact);
     const select = req.body.select;
-    const text = req.body.text;
+    const complaint = req.body.complaint;
 
     const newComplaint = new Complaint({
         name,
         email,
         contact,
         select,
-        text
+        complaint
     })
 
     newComplaint.save().then(()=>{
@@ -30,9 +31,9 @@ router.route("/addComplaint").post((req,res)=>{
 /////////////////////////////////////////////////////////get complaints(retirieve)///////////////////////////////////////////////
 
 router.route("/").get((req,res)=>{
-    Complaint.find().then(()=>{
+    Complaint.find().then((complaint)=>{
         res.json(complaint)
-    }).catch((err)=>{
+    }).catch((err)=>{	
         console.log(err)
     })
 })

@@ -38,7 +38,7 @@ const guidesRouter = require("./routes/guides");
 const itinerariesRouter = require("./routes/itineraries");
 const bookingmanagemntRouter = require("./routes/bookingmanagement");
 const cancelbookingsRouter = require("./routes/cancelbookings");
-
+const complaintsRouter = require("./routes/ComplaintRoute");
 const hotelRoute =require('./routes/posts');
 
 
@@ -62,6 +62,7 @@ app.use("/guides",guidesRouter);
 app.use("/itineraries",itinerariesRouter);
 app.use("/bookingmanagement",bookingmanagemntRouter);
 app.use("/cancelbookings",cancelbookingsRouter);
+app.use("/complaint", complaintsRouter );
 app.use(hotelRoute);
 
 app.listen(PORT, () => {

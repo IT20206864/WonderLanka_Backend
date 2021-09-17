@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const complaintSchema = new Schema({
     name : {
         type : String,
@@ -16,7 +17,7 @@ const complaintSchema = new Schema({
         type : String,
         required : true
     },
-    text : {
+    complaint : {
         type : String,
         required : true
     }
