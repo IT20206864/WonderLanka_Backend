@@ -40,7 +40,7 @@ const bookingmanagemntRouter = require("./routes/bookingmanagement");
 const cancelbookingsRouter = require("./routes/cancelbookings");
 const complaintsRouter = require("./routes/ComplaintRoute");
 const hotelRoute =require('./routes/posts');
-
+const employeesRouter=require("./routes/employees.js");
 
 
 
@@ -64,6 +64,7 @@ app.use("/bookingmanagement",bookingmanagemntRouter);
 app.use("/cancelbookings",cancelbookingsRouter);
 app.use("/complaint", complaintsRouter );
 app.use(hotelRoute);
+app.use("/employees", employeesRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
