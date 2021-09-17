@@ -55,24 +55,26 @@ router.route('/update/:id').post((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 //delete driver
-router.delete('/:id',(req,res) =>{
-    Driver.findByIdAndRemove(req.params.id).exec((err,deleteDriver) =>{
+router.route("/delete:id").delete(async(req,res) =>{
+    
+    const driver = req.params.id;
+    await Driver.findByIdAndDelete(driver).then(()=>{
+        res.status(200).send({status : "Driver Deleted!"});
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"Deletion unsuccesful!"});
+    })
+})
 
-        if(err) return res.status(400).json({
-            message:"Delete unsuccessful",err
-        });
 
-        return res.json({
-            message:"Delete successful",deleteDriver
-        });
-    });
-});
 //get one driver details
 router.route('/:id').get((req, res) => {
     Driver.findById(req.params.id)
       .then(driver => res.json(driver))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+
+
 
 
 
