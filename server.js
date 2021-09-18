@@ -48,6 +48,7 @@ const vehiclesRouter = require('./routes/vehicles');
 const typesRouter = require('./routes/types');
 const { connect } = require("mongodb");
 
+
 app.use('/vehicles', vehiclesRouter);
 app.use('/types', typesRouter);
 
