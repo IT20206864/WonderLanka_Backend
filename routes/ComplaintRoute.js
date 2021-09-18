@@ -43,7 +43,7 @@ router.route("/").get((req,res)=>{
 /////////////////////////////////////////////////Update////////////////////////////////////////////////////////////
 
 router.route("/updateComplaint/:id").put(async(req, res)=>{
-    let TourID = req.params.id;
+    let id = req.params.id;
     const {name, email, contact, select, text} = req.body;
 
     const updateComplaint = {
@@ -54,8 +54,8 @@ router.route("/updateComplaint/:id").put(async(req, res)=>{
         text
     }
 
-    const update = await Complaint.findByIdAndUpdate(TourID, updateComplaint).then(()=>{
-        res.status(200).send({status: "Complaint updated", complaint: update})
+    const update = await Complaint.findByIdAndUpdate(id, updateComplaint).then(()=>{
+        res.status(200).send({status: "Complaint updated"})
     }).catch((err)=>{
         console.log(err);
         res.status(500).send({status: "Error with updating data"});
@@ -66,9 +66,8 @@ router.route("/updateComplaint/:id").put(async(req, res)=>{
 ///////////////////////////////////////////////////////Delete///////////////////////////////////////////////////////////////////
 
 router.route("/deleteComplaint/:id").delete(async(req, res) => {
-    let TourID = req.params.id;
-
-    await Complaint.findByIdAndDelete(TourID)
+    const id = req.params.id;
+    await Complaint.findByIdAndDelete(id)
     .then(() =>{
         res.status(200).send({status: "Complaint deleted"});
     }).catch((err)=>{
@@ -78,13 +77,13 @@ router.route("/deleteComplaint/:id").delete(async(req, res) => {
 })
 
 router.route("/getComplaint/:id").get(async(req, res) => {
-    let TourID = req.params.id;
+    const TourID = req.params.id;
     await Complaint.findById(TourID)
     .then(() => {
-        res.status_(200).send({status: "Complaint fetched", complaint: complaint})
+        res.status_(200).send({status: "Complaint fetched"})
     }).catch(() => {
         console.log(err.message);
-        res.status(500).send({status: "Error with get user", error: err.message});
+        res.status(500).send({status: "Error with get complaint", error: err.message});
     })
 })
 
