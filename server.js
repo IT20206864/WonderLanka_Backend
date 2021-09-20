@@ -41,9 +41,6 @@ const cancelbookingsRouter = require("./routes/cancelbookings");
 const complaintsRouter = require("./routes/ComplaintRoute");
 const hotelRoute =require('./routes/posts');
 const employeesRouter=require("./routes/employees.js");
-
-
-
 const vehiclesRouter = require('./routes/vehicles');
 const typesRouter = require('./routes/types');
 const { connect } = require("mongodb");
