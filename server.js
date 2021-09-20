@@ -43,6 +43,7 @@ const hotelRoute =require('./routes/posts');
 const employeesRouter=require("./routes/employees.js");
 const vehiclesRouter = require('./routes/vehicles');
 const typesRouter = require('./routes/types');
+const restaurantsRouter = require("./routes/restaurants");
 const { connect } = require("mongodb");
 
 app.use('/vehicles', vehiclesRouter);
@@ -62,7 +63,7 @@ app.use("/cancelbookings",cancelbookingsRouter);
 app.use("/complaint", complaintsRouter );
 app.use(hotelRoute);
 app.use("/employees", employeesRouter);
-
+app.use("/restaurants",restaurantsRouter);
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);
 });
