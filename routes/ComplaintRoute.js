@@ -35,7 +35,7 @@ router.route("/").get((req,res)=>{
     Complaint.find().then((complaint)=>{
         res.json(complaint)
     }).catch((err)=>{	
-        console.log(err)
+        console.log(err);
     });
 });
 
