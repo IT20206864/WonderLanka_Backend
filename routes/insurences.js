@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const { response } = require("express");
+const { json } = require("express");
 let Insurence =require("../models/insurence.js");
+let Booking =require("../models/Booking.js");
 
 //create function
 router.route("/add-package").post((req,res) => {
@@ -38,6 +40,13 @@ router.route('/').get((req, res) => {
 });
 
 
+//read  Packages (Report)
+router.route('/report').get((req, res) => {
+  Booking.find()
+    .then(insurencesReport => res.json(insurencesReport))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
 
 //Update Function
 router.route('/update/:id').put(async (req, res) => {
@@ -60,12 +69,12 @@ router.route('/update/:id').put(async (req, res) => {
           InsurenceDetails,
         }
 
-        const update = await Insurence.findByIdAndUpdate(Insurance_Packages,insuranceDetails).then((req,res)=>{
-            res.status(200).send({status : "Insurance Plan Updated!"})
-        }).catch((err) =>{
-            console.log(err);
-            res.status(500).send({status : "Error in updating Plan"});
+        const update = await Insurence.findByIdAndUpdate(Insurance_Packages,insuranceDetails).then(()=>{
+          res.json("updated successfully!");
         })
+        .catch((err) => {
+          console.log(err);
+        });
 })
       
 
