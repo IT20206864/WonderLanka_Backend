@@ -75,6 +75,17 @@ router.route('/:id').get((req, res) => {
   });
 
 
+  //Getting Details of one Driver by Name
+
+router.route("/getbyName/:name").get(async (req,res) =>{
+    let driverName = req.params.name;
+    const driver = await Driver.findOne({firstname : driverName}).then((data) =>{
+      res.json(data);
+    }).catch((err) =>{
+      console.log(err.message);
+    })
+  })
+
 
 
 
