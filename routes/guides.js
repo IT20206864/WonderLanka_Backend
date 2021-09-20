@@ -83,7 +83,7 @@ router.route("/delete/:id").delete(async (req, res) => {
     });
 });
 
-//Getting Details of one Guide
+//Getting Details of one Guide by ID
 
 router.route("/get/:id").get(async (req, res) => {
   let guideId = req.params.id;
@@ -99,5 +99,17 @@ router.route("/get/:id").get(async (req, res) => {
         .send({ status: "Error in Fetching Details", error: err.message });
     });
 });
+
+//Getting Details of one Guide by Name
+
+router.route("/getbyName/:name").get(async (req,res) =>{
+  let guideName = req.params.name;
+  const guide = await Guide.findOne({fName : guideName}).then((data) =>{
+    res.json(data);
+  }).catch((err) =>{
+    console.log(err.message);
+  })
+})
+
 
 module.exports = router;
