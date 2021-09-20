@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const feedback = require("../models/Feedbacks");
 let Feedback  = require("../models/Feedbacks");
+const { json } = require("express");
 
 ///////////////////////////////////////Add Feedback/////////////////////////////////////////////////////////////////////////
 
@@ -18,14 +19,14 @@ router.route("/addFeedback").post((req,res)=>{
         res.json("Feedback Added")
     }).catch((err)=>{
         console.log(err);
-    })
+    });
 
-})
+});
 
 //////////////////////////////////////////get feedbacks(retrieve)//////////////////////////////////////////////////////////
 
 router.route("/").get((req,res)=>{
-    Feedback.find().then(()=>{
+    Feedback.find().then((feedback)=>{
         res.json(feedback)
     }).catch((err)=>{
         console.log(err)
@@ -36,7 +37,7 @@ router.route("/").get((req,res)=>{
 /////////////////////////////////////////////////Update////////////////////////////////////////////////////////////
 
 router.route("/updateFeedback/:id").put(async(req, res)=>{
-    let userId = req.params.id;
+    let FeedID = req.params.id;
     const {stat, feedback} = req.body;
 
     const updateFeedback = {
@@ -44,7 +45,7 @@ router.route("/updateFeedback/:id").put(async(req, res)=>{
         feedback
     }
 
-    const update = await Feedback.findByIdAndUpdate(TourID, updateFeedback).then(()=>{
+    const update = await Feedback.findByIdAndUpdate(FeedID, updateFeedback).then(()=>{
         res.status(200).send({status: "Feedback updated", feedback: update})
     }).catch((err)=>{
         console.log(err);
@@ -56,15 +57,15 @@ router.route("/updateFeedback/:id").put(async(req, res)=>{
 
 
 router.route("/deleteFeedback/:id").delete(async(req, res) => {
-    let TourID = req.params.id;
+    let FeedID = req.params.id;
 
-    await Complaint.findByIdAndDelete(TourID)
+    await Complaint.findByIdAndDelete(FeedID)
     .then(() =>{
         res.status(200).send({status: "Feedback deleted"});
     }).catch((err)=>{
         console.log(err.message);
         res.status(500).send({status: "Eror with delete feedback", error: err.message})
-    })
-})
+    });
+});
 
 module.exports = router;

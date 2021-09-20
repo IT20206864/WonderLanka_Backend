@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const feedbackSchema = new Schema({
     stat : {
         type : String,
@@ -11,6 +12,6 @@ const feedbackSchema = new Schema({
 
 })
 
-const feedback = mongoose.model("Feedback", feedbackSchema);
+const Feedback = mongoose.model("Feedback", feedbackSchema);
 
-module.exports = feedback;
+module.exports = Feedback;
