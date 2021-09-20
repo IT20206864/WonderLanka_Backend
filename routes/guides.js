@@ -8,10 +8,7 @@ router.route("/add").post((req, res) => {
   const { guideID, fName, lName, email, telNo, licenseID, foreignLang } =
     req.body;
 
-    newGuide.save().then(()=>{
-        res.json("Guide Added")
-    }).catch((err) =>{
-        console.log(err);
+
   const newGuide = new Guide({
     guideID,
     fName,
@@ -21,7 +18,11 @@ router.route("/add").post((req, res) => {
     licenseID,
     foreignLang,
   });
-
+          newGuide.save().then(()=>{
+            res.json("Guide Added")
+            
+        }).catch((err) =>{
+            console.log(err);
 
   });
 });
