@@ -5,7 +5,7 @@ const { json } = require("express");
 //////////////////////////////////////////////////////////Add Complaint(create)////////////////////////////////////////////////
 
 router.route("/addComplaint").post((req,res)=>{
-
+    const tourID = req.body;
     const name = req.body.name;
     const email = req.body.email;
     const contact = Number(req.body.contact);
@@ -13,30 +13,31 @@ router.route("/addComplaint").post((req,res)=>{
     const complaint = req.body.complaint;
 
     const newComplaint = new Complaint({
+        tourID,
         name,
         email,
         contact,
         select,
         complaint
-    })
+    });
 
     newComplaint.save().then(()=>{
         res.json("Complaint Added")
     }).catch((err)=>{
         console.log(err);
-    })
+    });
 
-})
+});
 
 /////////////////////////////////////////////////////////get complaints(retirieve)///////////////////////////////////////////////
 
 router.route("/").get((req,res)=>{
     Complaint.find().then((complaint)=>{
         res.json(complaint)
-    }).catch((err)=>{	
-        console.log(err)
-    })
-})
+    }).catch((err)=>{
+        console.log(err);
+    });
+});
 
 
 
@@ -44,48 +45,48 @@ router.route("/").get((req,res)=>{
 
 router.route("/updateComplaint/:id").put(async(req, res)=>{
     let TourID = req.params.id;
-    const {name, email, contact, select, text} = req.body;
+    const {tourID, name, email, contact, select, complaint} = req.body;
 
     const updateComplaint = {
+        tourID,
         name,
         email,
         contact,
         select,
-        text
+        complaint
     }
 
     const update = await Complaint.findByIdAndUpdate(TourID, updateComplaint).then(()=>{
-        res.status(200).send({status: "Complaint updated", complaint: update})
+        res.status(200).send({status: "Complaint updated"})
     }).catch((err)=>{
         console.log(err);
         res.status(500).send({status: "Error with updating data"});
-    })   
-})
+    });
+});
 
 
 ///////////////////////////////////////////////////////Delete///////////////////////////////////////////////////////////////////
 
 router.route("/deleteComplaint/:id").delete(async(req, res) => {
-    let TourID = req.params.id;
-
-    await Complaint.findByIdAndDelete(TourID)
+    let tourID = req.params.id;
+    await Complaint.findByIdAndDelete({tourID})
     .then(() =>{
         res.status(200).send({status: "Complaint deleted"});
     }).catch((err)=>{
         console.log(err.message);
         res.status(500).send({status: "Eror with delete complaint", error: err.message})
-    })
-})
+    });
+});
 
 router.route("/getComplaint/:id").get(async(req, res) => {
     let TourID = req.params.id;
-    await Complaint.findById(TourID)
+    const Tour = await Complaint.findById(TourID)
     .then(() => {
-        res.status_(200).send({status: "Complaint fetched", complaint: complaint})
+        res.status_(200).send({status: "Complaint fetched"})
     }).catch(() => {
         console.log(err.message);
-        res.status(500).send({status: "Error with get user", error: err.message});
-    })
-})
+        res.status(500).send({status: "Error with get complaint", error: err.message});
+    });
+});
 
 module.exports = router;
