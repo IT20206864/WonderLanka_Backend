@@ -34,7 +34,7 @@ router.route("/addComplaint").post((req,res)=>{
 router.route("/").get((req,res)=>{
     Complaint.find().then((complaint)=>{
         res.json(complaint)
-    }).catch((err)=>{	
+    }).catch((err)=>{
         console.log(err);
     });
 });

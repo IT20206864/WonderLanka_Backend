@@ -4,7 +4,7 @@ let Driver=require("../models/driver");
 
 //add driver
 router.route("/add").post((req,res)=>{
-    
+
     const driverid=req.body.driverid;
     const firstname=req.body.firstname;
     const lastname=req.body.lastname;
@@ -30,7 +30,7 @@ router.route("/add").post((req,res)=>{
     })
 
 })
-//read  driver 
+//read  driver
 router.route('/details').get((req, res) => {
     Driver.find()
       .then(drivers => res.json(drivers))
@@ -47,7 +47,7 @@ router.route('/update/:id').post((req, res) => {
         driver.phonenumber = Number(req.body.phonenumber);
         driver.licenseid = req.body.licenseid;
         driver.languages = req.body.languages;
-  
+
         driver.save()
           .then(() => res.json('Driver updated!'))
           .catch(err => res.status(400).json('Error: ' + err));
@@ -56,7 +56,7 @@ router.route('/update/:id').post((req, res) => {
   });
 //delete driver
 router.route("/delete:id").delete(async(req,res) =>{
-    
+
     const driver = req.params.id;
     await Driver.findByIdAndDelete(driver).then(()=>{
         res.status(200).send({status : "Driver Deleted!"});

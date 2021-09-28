@@ -4,11 +4,11 @@ let Employee=require("../models/employee");
 
 //Add Employee
 router.route("/add").post((req,res)=>{
-    
+
     const empname=req.body.empname;
     const emppwd=req.body.emppwd;
     const emprole=req.body.emprole;
-    
+
 
     const newEmployee = new Employee({
         empname,
@@ -39,7 +39,7 @@ router.route('/update/:id').post((req, res) => {
         employee.empname=req.body.empname;
         employee.emppwd = req.body.emppwd;
         employee.emprole = req.body.emprole;
-        
+
            employee.save()
           .then(() => res.json('Employee updated!'))
           .catch(err => res.status(400).json('Error: ' + err));
@@ -50,7 +50,7 @@ router.route('/update/:id').post((req, res) => {
 
 //delete employee
 router.route("/delete:id").delete(async(req,res) =>{
-    
+
     const employee = req.params.id;
     await Employee.findByIdAndDelete(employee).then(()=>{
         res.status(200).send({status : "Employee Deleted!"});
