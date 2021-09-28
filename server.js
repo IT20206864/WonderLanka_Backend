@@ -39,8 +39,6 @@ const itinerariesRouter = require("./routes/itineraries");
 const bookingmanagemntRouter = require("./routes/bookingmanagement");
 const cancelbookingsRouter = require("./routes/cancelbookings");
 const complaintsRouter = require("./routes/ComplaintRoute");
-const hotelRoute =require('./routes/posts');
-const employeesRouter=require("./routes/employees.js");
 const insurenceRouter = require("./routes/Insurences.js");
 
 const feedbacksRouter = require("./routes/FeedbackRoute");
