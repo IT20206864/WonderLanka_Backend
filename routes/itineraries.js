@@ -8,7 +8,7 @@ let Itinerary = require("../models/Itineraries");
 
 const storage = multer.diskStorage({
     destination : (req,file,callback) =>{
-        callback(null,"../images/");
+        callback(null,"./images/");
     },
     filename : (req,file,callback) =>{
         callback(null, file.originalname);
@@ -16,18 +16,27 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage:storage});
+
+
+
 //Adding Itinerary
-router.route("/add" , upload.single("image") , upload.single("coverImage")).post((req,res) =>{
+router.post("/add" , upload.fields([
+    { name : 'itineraryImage', maxCount: 1 },
+    { name : 'itineraryCoverImage', maxCount: 1 },
+  ]),(req,res) =>{
     
 
     const newItinerary = new Itinerary({
-        name : req.body.name,
-        description : req.body.description,
-        image : req.file.image,
-        coverImage : req.file.coverImage,
-        classIt : req.body.classIt,
-        priceAdult : req.body.priceAdult,
-        priceChild : req.body.priceChild
+
+        itineraryId : req.body.itineraryId,
+        itineraryDays : req.body.itineraryDays,
+        itineraryName : req.body.itineraryName,
+        itineraryDesc : req.body.itineraryDesc,
+        itineraryImage : req.files.itineraryImage[0].originalname,
+        itineraryCoverImage : req.files.itineraryCoverImage[0].originalname,
+        itineraryClass : req.body.itineraryClass,
+        itineraryPriceAdult : req.body.itineraryPriceAdult,
+        itineraryPriceChild : req.body.itineraryPriceChild
 
     })
 
@@ -49,39 +58,60 @@ router.route("/").get((req,res)=>{
 
 //Updating Itinerary Details
 
-router.route("/update:id" ,upload.single("image") , upload.single("coverImage")).put(async (req,res) =>{
+router.route("/update/:id").put(upload.fields([
+    { name: 'itineraryImage', maxCount: 1 },
+    { name: 'itineraryCoverImage', maxCount: 1 },
+  ]),async(req,res) =>{
     const itinerary = req.params.id;
 
-        const name =  req.body.name;
-        const description = req.body.description;
-        const image = req.file.image;
-        const coverImage = req.file.coverImage;
-        const classIt = req.body.classIt;
-        const priceAdult = req.body.priceAdult;
-        const priceChild = req.body.priceChild;
+     const itineraryId = req.body.itineraryId;
+     const itineraryDays = req.body.itineraryDays;
+     const itineraryName = req.body.itineraryName;
+     const itineraryDesc = req.body.itineraryDesc;
+     const itineraryImage = req.files.itineraryImage[0].originalname;
+     const itineraryCoverImage = req.files.itineraryCoverImage[0].originalname;
+     const itineraryClass = req.body.itineraryClass;
+     const itineraryPriceAdult = req.body.itineraryPriceAdult;
+     const itineraryPriceChild = req.body.itineraryPriceChild;
 
-        const itineraryDetails = {
-            name,
-            description,
-            image,
-            coverImage,
-            classIt,
-            priceAdult,
-            priceChild,
-        }
+         const itineraryDetails = {
+             itineraryId,
+             itineraryDays,
+             itineraryName,
+             itineraryDesc, 
+             itineraryImage, 
+             itineraryCoverImage, 
+             itineraryClass, 
+             itineraryPriceAdult,
+             itineraryPriceChild 
+         }
 
-        const update = await Itinerary.findByIdAndUpdate(itinerary,itineraryDetails).then((req,res)=>{
-            res.status(200).send({status : "Itinerary Updated!"})
+        // const itineraryDetails = {
+
+        //     itineraryId : req.body.itineraryId,
+        //     itineraryDays : req.body.itineraryDays,
+        //     itineraryName : req.body.itineraryName,
+        //     itineraryDesc : req.body.itineraryDesc,
+        //     itineraryImage : req.files.itineraryImage[0].originalname,
+        //     itineraryCoverImage : req.files.itineraryCoverImage[0].originalname,
+        //     itineraryClass : req.body.itineraryClass,
+        //     itineraryPriceAdult : req.body.itineraryPriceAdult,
+        //     itineraryPriceChild : req.body.itineraryPriceChild
+    
+        // }
+
+        const update = await Itinerary.findByIdAndUpdate(itinerary,itineraryDetails).then(()=>{
+            res.json("Itinerary Edited")
         }).catch((err) =>{
             console.log(err);
-            res.status(500).send({status : "Error in updating itinerary"});
+            
         })
 })
 
 
 //Deleting Itinerary Details
 
-router.route("/delete:id").delete(async(req,res) =>{
+router.route("/delete/:id").delete(async(req,res) =>{
     
     const itinerary = req.params.id;
     await Itinerary.findByIdAndDelete(itinerary).then(()=>{
@@ -93,15 +123,55 @@ router.route("/delete:id").delete(async(req,res) =>{
 })
 
 
+
 //Fetch one Itinerary Detail
 
-router.route("/get:id").get(async(req,res)=>{
+router.route("/get/:id").get(async(req,res)=>{
     const itinerary = req.params.id;
-    const itin = await Itinerary.findById(itinerary).then(()=>{
-        res.status(200).send({status : "Fetched Itinerary Details" , data : itin});
+    const itin = await Itinerary.findById(itinerary).then((data)=>{
+        res.json(data);
+        
+        
     }).catch((err)=>{
         res.status(500).send({status : "Fetching unsuccesful!"});
     })
 })
+
+
+//Fetch one Itinerary Image
+
+router.route("/getImage/:id").get(async(req,res)=>{
+    const itinerary = req.params.id;
+    const itin = await Itinerary.findById(itinerary).then((data)=>{
+        const image = data.itineraryImage;
+        const file = `./images/${image}`;
+        res.download(file);
+        
+        
+    }).catch((err)=>{
+        res.status(500).send({status : "Fetching Image unsuccesful!"});
+    })
+})
+
+
+//Fetch one Itinerary Cover Image
+
+router.route("/getCovImage/:id").get(async(req,res)=>{
+    const itinerary = req.params.id;
+    const itin = await Itinerary.findById(itinerary).then((data)=>{
+        const image = data.itineraryCoverImage;
+        const file = `./images/${image}`;
+        res.download(file);
+        
+        
+    }).catch((err)=>{
+        res.status(500).send({status : "Fetching Image unsuccesful!"});
+    })
+})
+
+
+
+
+
 
 module.exports = router;

@@ -88,6 +88,16 @@ router.route("/get/:username").get(async (req, res) => {
     });
 });
 
+router.route("/get/:id").get(async(req,res) =>{
+  const id = req.params.id;
+  console.log(id);
+  await Booking.findById(id).then((booking)=>{
+    res.json(booking);
+  }).catch((err) =>{
+    console.log(err);
+  })
+})
+
 router.route("/update/:tourid").put(async (req, res) => {
   let tourId = req.params.tourid;
 

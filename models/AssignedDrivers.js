@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const assignedDriverScheme = new Schema({
   tourId: { type: String },
-  driverId: { type: String },
+  driverid: { type: String },
 });
 
 const AssignedDriver = mongoose.model("assigned_driver", assignedDriverScheme);

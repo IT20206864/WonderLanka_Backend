@@ -60,4 +60,11 @@ router.route("/delete:id").delete(async(req,res) =>{
     })
 })
 
+
+//get one employee details
+router.route('/:id').get((req, res) => {
+    Employee.findById(req.params.id)
+      .then(employee => res.json(employee))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
 module.exports=router;

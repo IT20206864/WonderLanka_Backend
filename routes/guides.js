@@ -8,6 +8,7 @@ router.route("/add").post((req, res) => {
   const { guideID, fName, lName, email, telNo, licenseID, foreignLang } =
     req.body;
 
+
   const newGuide = new Guide({
     guideID,
     fName,
@@ -17,18 +18,13 @@ router.route("/add").post((req, res) => {
     licenseID,
     foreignLang,
   });
+          newGuide.save().then(()=>{
+            res.json("Guide Added")
+            
+        }).catch((err) =>{
+            console.log(err);
 
-  newGuide
-    .save()
-    .then(() => {
-      res.json("Student Added");
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  });
 });
 
 //Viewing Guide Details
@@ -72,6 +68,7 @@ router.route("/update/:id").put(async (req, res) => {
 
 //Deleting a Guide
 
+
 router.route("/delete/:id").delete(async (req, res) => {
   let guideID = req.params.id;
   console.log(guideID);
@@ -87,13 +84,14 @@ router.route("/delete/:id").delete(async (req, res) => {
     });
 });
 
-//Getting Details of one Guide
+//Getting Details of one Guide by ID
 
 router.route("/get/:id").get(async (req, res) => {
   let guideId = req.params.id;
   const guide = await Guide.findById(guideId)
-    .then(() => {
-      res.status(200).send({ status: "Guide Fetched" });
+    .then((data) => {
+      res.json(data);
+      
     })
     .catch((err) => {
       console.log(err.message);
@@ -102,5 +100,17 @@ router.route("/get/:id").get(async (req, res) => {
         .send({ status: "Error in Fetching Details", error: err.message });
     });
 });
+
+//Getting Details of one Guide by Name
+
+router.route("/getbyName/:name").get(async (req,res) =>{
+  let guideName = req.params.name;
+  const guide = await Guide.findOne({fName : guideName}).then((data) =>{
+    res.json(data);
+  }).catch((err) =>{
+    console.log(err.message);
+  })
+})
+
 
 module.exports = router;
