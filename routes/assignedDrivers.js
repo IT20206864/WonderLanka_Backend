@@ -4,10 +4,10 @@ let Driver = require("../models/AssignedDrivers");
 
 router.post("/add" , (req,res)=>{
 
-  const assignedGuide = new Driver({
+  const assignedDriver = new Driver({
 
     tourId : req.body.tid,
-    driverid : req.body.did
+    driverId : req.body.did
   })
   assignedDriver.save().then(()=>{
     res.json("Driver Assigned!");
@@ -35,5 +35,6 @@ router.route("/").get((req,res) =>{
     console.log(err);
   })
 })
+
 
 module.exports = router;
