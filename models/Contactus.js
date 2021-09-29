@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const complaintSchema = new Schema({
-    
-    name : {
+const contactusSchema = new Schema({
+    fname : {
+        type : String,
+        required : true
+    },
+     lname : {
         type : String,
         required : true
     },
@@ -14,17 +17,13 @@ const complaintSchema = new Schema({
         type : Number,
         required : true
     },
-    select : {
-        type : String,
-        required : true
-    },
-    complaint : {
+    message : {
         type : String,
         required : true
     }
 
 })
 
-const Complaint = mongoose.model("Complaint", complaintSchema);
+const Contactus = mongoose.model("Contactus", contactusSchema);
 
-module.exports = Complaint;
+module.exports = Contactus;
