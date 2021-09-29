@@ -47,9 +47,10 @@ router.route("/").get((req, res) => {
 router.route("/get/:username").get((req, res) => {
   const username = req.params.username;
 
-  User.find({ username })
+  User.findOne({ username })
     .then((data) => {
       res.json(data);
+      console.log(data);
     })
     .catch((err) => {
       console.log(err);
@@ -111,17 +112,4 @@ router.route("/check/:username").get(async (req, res) => {
       console.log(err);
     });
 });
-
-router.route("/get/password/:username").get(async (req, res) => {
-  const username = req.params.username;
-  User.findOne({ username })
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((err) => {
-      res.json(err);
-      console.log(err);
-    });
-});
-
 module.exports = router;
