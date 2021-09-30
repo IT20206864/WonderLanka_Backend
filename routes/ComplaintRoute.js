@@ -5,7 +5,7 @@ const { json } = require("express");
 //////////////////////////////////////////////////////////Add Complaint(create)////////////////////////////////////////////////
 
 router.route("/addComplaint").post((req,res)=>{
-    const tourID = req.body;
+    const tourID = req.body.id;
     const name = req.body.name;
     const email = req.body.email;
     const contact = Number(req.body.contact);
