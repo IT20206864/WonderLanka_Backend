@@ -60,4 +60,16 @@ router.route('/update/:id').post((req, res) => {
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+  //Getting Details of one Vehicle by Name
+
+router.route("/getbyName/:name").get(async (req,res) =>{
+  let vehicleName = req.params.name;
+  const vehicle = await Vehicle.findOne({vname : vehicleName}).then((data) =>{
+    res.json(data);
+  }).catch((err) =>{
+    console.log(err.message);
+  })
+})
+
+
 module.exports = router;
