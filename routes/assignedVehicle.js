@@ -1,16 +1,16 @@
 const router = require("express").Router();
-let Driver = require("../models/AssignedDrivers");
+let Vehicle = require("../models/AssignedVehicle");
 
 
 router.post("/add" , (req,res)=>{
 
-  const assignedDriver = new Driver({
+  const assignedVehicle = new Vehicle({
 
     tourId : req.body.tid,
-    driverId : req.body.did
+    vehicleId : req.body.vid
   })
-  assignedDriver.save().then(()=>{
-    res.json("Driver Assigned!");
+  assignedVehicle.save().then(()=>{
+    res.json("Vehicle Assigned!");
   }).catch((err)=>{
     console.log(err);
   })
@@ -19,7 +19,7 @@ router.post("/add" , (req,res)=>{
 
 router.route("/get/:tourId").get(async (req, res) => {
   const tourId = req.params.tourId;
-  await Driver.findOne({ tourId })
+  await Vehicle.findOne({ tourId })
     .then((data) => {
       res.json(data);
     })
@@ -29,7 +29,7 @@ router.route("/get/:tourId").get(async (req, res) => {
 });
 
 router.route("/").get((req,res) =>{
-  Driver.find().then((data)=>{
+    Vehicle.find().then((data)=>{
     res.json(data)
   }).catch((err) =>{
     console.log(err);

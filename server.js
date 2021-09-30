@@ -31,7 +31,7 @@ const driversRouter=require("./routes/drivers.js");
 const bookingsRouter = require("./routes/bookings.js");
 const assignedDriversRouter = require("./routes/assignedDrivers.js");
 const assignedGuidesRouter = require("./routes/assignedGuides.js");
-const assignedVehiclesRouter = require("./routes/assignedVehicles.js");
+const assignedVehicleRouter = require("./routes/assignedVehicle.js");
 const usersRouter = require("./routes/users.js");
 const unregUserRouter = require("./routes/unregisteredUsers");
 const guidesRouter = require("./routes/guides");
@@ -39,14 +39,17 @@ const itinerariesRouter = require("./routes/itineraries");
 const bookingmanagemntRouter = require("./routes/bookingmanagement");
 const cancelbookingsRouter = require("./routes/cancelbookings");
 const complaintsRouter = require("./routes/ComplaintRoute");
+const feedbacksRouter = require("./routes/FeedbackRoute");
 const hotelRoute =require('./routes/posts');
 const employeesRouter=require("./routes/employees.js");
-
+const contactus = require("./routes/ContactusRoute");
 
 
 const vehiclesRouter = require('./routes/vehicles');
 const typesRouter = require('./routes/types');
 const { connect } = require("mongodb");
+
+
 
 app.use('/vehicles', vehiclesRouter);
 app.use('/types', typesRouter);
@@ -55,7 +58,7 @@ app.use("/drivers",driversRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/assignedDrivers", assignedDriversRouter);
 app.use("/assignedGuides", assignedGuidesRouter);
-app.use("/assignedVehicles", assignedVehiclesRouter);
+app.use("/assignedVehicle", assignedVehicleRouter);
 app.use("/users", usersRouter);
 app.use("/unregUser", unregUserRouter);
 app.use("/guides",guidesRouter);
@@ -65,6 +68,8 @@ app.use("/cancelbookings",cancelbookingsRouter);
 app.use("/complaint", complaintsRouter );
 app.use(hotelRoute);
 app.use("/employees", employeesRouter);
+app.use("/feedback", feedbacksRouter);
+app.use("/contactus", contactus);
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port number ${PORT}`);

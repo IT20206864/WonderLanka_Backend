@@ -33,19 +33,39 @@ router.route('/details').get((req, res) => {
 
 
 //update employee
-router.route('/update/:id').post((req, res) => {
-    Employee.findById(req.params.id)
-      .then(employee => {
-        employee.empname=req.body.empname;
-        employee.emppwd = req.body.emppwd;
-        employee.emprole = req.body.emprole;
-        
-           employee.save()
-          .then(() => res.json('Employee updated!'))
-          .catch(err => res.status(400).json('Error: ' + err));
+router.route("/update/:id").put(async (req, res) => {
+    let EmpID = req.params.id;
+    const {empname,emppwd,emprole } =
+      req.body;
+  
+    const updateEmployee = {
+     empname,
+     emppwd,
+     emprole,
+    };
+  
+    const update = await Employee.findByIdAndUpdate(EmpID, updateEmployee)
+      .then(() => {
+        res.status(200).send({ status: "Employee Updated" });
       })
-      .catch(err => res.status(400).json('Error: ' + err));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send({ status: "Error with updating data" });
+      });
   });
+  
+  
+  //delete driver
+  router.route("/delete:id").delete(async(req,res) =>{
+      
+      const driver = req.params.id;
+      await Driver.findByIdAndDelete(driver).then(()=>{
+          res.status(200).send({status : "Driver Deleted!"});
+      }).catch((err)=>{
+          console.log(err);
+          res.status(500).send({status:"Deletion unsuccesful!"});
+      })
+  })
 
 
 //delete employee

@@ -10,3 +10,4 @@ const assignedDriverScheme = new Schema({
 const AssignedDriver = mongoose.model("assigned_driver", assignedDriverScheme);
 
 module.exports = AssignedDriver;
+
