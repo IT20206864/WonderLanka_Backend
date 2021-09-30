@@ -7,7 +7,7 @@ router.post("/add" , (req,res)=>{
   const assignedVehicle = new Vehicle({
 
     tourId : req.body.tid,
-    vehicleId : req.body.vid
+    vehicleID : req.body.vid
   })
   assignedVehicle.save().then(()=>{
     res.json("Vehicle Assigned!");
