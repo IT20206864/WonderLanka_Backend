@@ -31,7 +31,7 @@ const driversRouter=require("./routes/drivers.js");
 const bookingsRouter = require("./routes/bookings.js");
 const assignedDriversRouter = require("./routes/assignedDrivers.js");
 const assignedGuidesRouter = require("./routes/assignedGuides.js");
-const assignedVehiclesRouter = require("./routes/assignedVehicles.js");
+const assignedVehicleRouter = require("./routes/assignedVehicle.js");
 const usersRouter = require("./routes/users.js");
 const unregUserRouter = require("./routes/unregisteredUsers");
 const guidesRouter = require("./routes/guides");
@@ -49,6 +49,8 @@ const vehiclesRouter = require('./routes/vehicles');
 const typesRouter = require('./routes/types');
 const { connect } = require("mongodb");
 
+
+
 app.use('/vehicles', vehiclesRouter);
 app.use('/types', typesRouter);
 
@@ -56,7 +58,7 @@ app.use("/drivers",driversRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/assignedDrivers", assignedDriversRouter);
 app.use("/assignedGuides", assignedGuidesRouter);
-app.use("/assignedVehicles", assignedVehiclesRouter);
+app.use("/assignedVehicle", assignedVehicleRouter);
 app.use("/users", usersRouter);
 app.use("/unregUser", unregUserRouter);
 app.use("/guides",guidesRouter);
