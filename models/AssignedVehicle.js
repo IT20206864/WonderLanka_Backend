@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const assignedVehicleScheme = new Schema({
   tourId: { type: String },
-  vehicleId: { type: String },
+  vehicleID: { type: String },
 });
 
 const assignedVehicle = mongoose.model("assigned_vehicle", assignedVehicleScheme);
