@@ -87,4 +87,27 @@ router.route('/:id').get((req, res) => {
       .then(employee => res.json(employee))
       .catch(err => res.status(400).json('Error: ' + err));
   });
+
+//check employee by username
+router.route('/find/:username').get(async(req,res) =>{
+    const username = req.params.username;
+    await Employee.exists({empname : username}).then((data)=>{
+        res.json(data);
+        console.log(data);
+
+    }).catch((err)=>{
+        console.log(err);
+    })
+})
+
+//Getting details of employee by username
+router.route('/get/:username').get(async(req,res) =>{
+    const username = req.params.username;
+    await Employee.findOne({empname : username}).then((data) =>{
+        res.json(data);
+        console.log(data);
+    }).catch((err) =>{
+        console.log(err);
+    })
+})
 module.exports=router;
