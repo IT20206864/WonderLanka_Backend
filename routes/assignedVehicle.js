@@ -36,5 +36,16 @@ router.route("/").get((req,res) =>{
   })
 })
 
+//Check whether TID exists
+
+router.route("/check/:tid").get(async(req,res) =>{
+  const tid = req.params.tid;
+  await Vehicle.exists({tourId : tid}).then((data) =>{
+    res.json(data);
+    console.log(data);
+  }).catch((err) =>{
+    console.log(err);
+  })
+})
 
 module.exports = router;
