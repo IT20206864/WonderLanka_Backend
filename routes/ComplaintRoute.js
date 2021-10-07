@@ -79,11 +79,12 @@ router.route("/deleteComplaint/:id").delete(async(req, res) => {
     });
 });
 
-router.route("/getComplaint/:id").get(async(req, res) => {
-    let TourID = req.params.id;
-    const Tour = await Complaint.findById(TourID)
-    .then(() => {
+router.route("/getComplaint/:name").get(async(req, res) => {
+    const name = req.params.name;
+    await Complaint.findOne({name})
+    .then((data) => {
         res.status_(200).send({status: "Complaint fetched"})
+        res.json(data);
     }).catch(() => {
         console.log(err.message);
         res.status(500).send({status: "Error with get complaint", error: err.message});
