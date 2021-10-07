@@ -58,7 +58,9 @@ app.use("/drivers",driversRouter);
 app.use("/bookings", bookingsRouter);
 app.use("/assignedDrivers", assignedDriversRouter);
 app.use("/assignedGuides", assignedGuidesRouter);
+
 app.use("/assignedVehicle", assignedVehicleRouter);
+
 app.use("/users", usersRouter);
 app.use("/unregUser", unregUserRouter);
 app.use("/guides",guidesRouter);
