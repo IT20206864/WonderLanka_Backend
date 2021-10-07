@@ -68,9 +68,9 @@ router.route("/updateComplaint/:id").put(async(req, res)=>{
 ///////////////////////////////////////////////////////Delete///////////////////////////////////////////////////////////////////
 
 router.route("/deleteComplaint/:id").delete(async(req, res) => {
-    let tourID = req.params.id;
-    let name = req.params.name;
-    await Complaint.findByIdAndDelete({name})
+    let complaint = req.params.id;
+
+    await Complaint.findByIdAndDelete({complaint})
     .then(() =>{
         res.status(200).send({status: "Complaint deleted"});
     }).catch((err)=>{
