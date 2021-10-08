@@ -1,5 +1,14 @@
 const router = require("express").Router();
 let Booking = require("../models/Booking");
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: "smtp.ethereal.email",
+  port: 587,
+  auth: {
+    user: "reggie.bednar43@ethereal.email",
+    pass: "SBHXEKsRr8ByrjqnEn",
+  },
+});
 
 router.route("/add").post(async (req, res) => {
   let tourId;
@@ -61,6 +70,23 @@ router.route("/add").post(async (req, res) => {
     .save()
     .then(() => {
       res.json("Booking Submitted");
+      var mail = {
+        from: "<no-reply@wonderlankatours.com>",
+        to: newBooking.email,
+        subject: "Wonder Lanka Tours",
+        html:
+          "<b>Hello " +
+          newBooking.fullName +
+          ",</b>" +
+          "<p>Your booking has been confirmed! We will contact you very soon. <br> Thank you for choosing <a href='http://localhost:3000/index'><b><i>Wonder Lanka Tours.</i></b></a><br><br><i>Cheers,<br> Team Wonder Lanka.</i></p>",
+      };
+      transporter.sendMail(mail, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Email sent - " + info.response);
+        }
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -88,15 +114,17 @@ router.route("/get/:username").get(async (req, res) => {
     });
 });
 
-router.route("/get/:id").get(async(req,res) =>{
+router.route("/get/:id").get(async (req, res) => {
   const id = req.params.id;
   console.log(id);
-  await Booking.findById(id).then((booking)=>{
-    res.json(booking);
-  }).catch((err) =>{
-    console.log(err);
-  })
-})
+  await Booking.findById(id)
+    .then((booking) => {
+      res.json(booking);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
 
 router.route("/update/:tourid").put(async (req, res) => {
   let tourId = req.params.tourid;
