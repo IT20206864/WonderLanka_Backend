@@ -5,7 +5,7 @@ const { json } = require("express");
 //////////////////////////////////////////////////////////Add Complaint(create)////////////////////////////////////////////////
 
 router.route("/addComplaint").post((req,res)=>{
-    const tourID = req.body.id;
+    const tourID = req.body;
     const name = req.body.name;
     const email = req.body.email;
     const contact = Number(req.body.contact);
@@ -68,9 +68,8 @@ router.route("/updateComplaint/:id").put(async(req, res)=>{
 ///////////////////////////////////////////////////////Delete///////////////////////////////////////////////////////////////////
 
 router.route("/deleteComplaint/:id").delete(async(req, res) => {
-    let complaint = req.params.id;
-
-    await Complaint.findByIdAndDelete({complaint})
+    let tourID = req.params.id;
+    await Complaint.findByIdAndDelete({tourID})
     .then(() =>{
         res.status(200).send({status: "Complaint deleted"});
     }).catch((err)=>{
@@ -79,12 +78,11 @@ router.route("/deleteComplaint/:id").delete(async(req, res) => {
     });
 });
 
-router.route("/getComplaint/:name").get(async(req, res) => {
-    const name = req.params.name;
-    await Complaint.findOne({name})
-    .then((data) => {
+router.route("/getComplaint/:id").get(async(req, res) => {
+    let TourID = req.params.id;
+    const Tour = await Complaint.findById(TourID)
+    .then(() => {
         res.status_(200).send({status: "Complaint fetched"})
-        res.json(data);
     }).catch(() => {
         console.log(err.message);
         res.status(500).send({status: "Error with get complaint", error: err.message});
