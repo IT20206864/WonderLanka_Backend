@@ -11,6 +11,7 @@ router.route("/addComplaint").post((req,res)=>{
     const contact = Number(req.body.contact);
     const select = req.body.select;
     const complaint = req.body.complaint;
+    const date = req.body.date;
 
     const newComplaint = new Complaint({
         tourID,
@@ -18,10 +19,12 @@ router.route("/addComplaint").post((req,res)=>{
         email,
         contact,
         select,
-        complaint
+        complaint,
+        date
     });
 
-    newComplaint.save().then(()=>{
+    newComplaint.save()
+    .then(()=>{
         res.json("Complaint Added")
     }).catch((err)=>{
         console.log(err);

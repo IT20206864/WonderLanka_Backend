@@ -20,6 +20,10 @@ const complaintSchema = new Schema({
     complaint : {
         type : String,
         required : true
+    },
+    date : { 
+        type : Date,
+        required : true
     }
 
 })
