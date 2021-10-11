@@ -11,6 +11,7 @@ router.route("/addComplaint").post((req,res)=>{
     const contact = Number(req.body.contact);
     const select = req.body.select;
     const complaint = req.body.complaint;
+    const date = req.body.date;
 
     const newComplaint = new Complaint({
         tourID,
@@ -18,10 +19,12 @@ router.route("/addComplaint").post((req,res)=>{
         email,
         contact,
         select,
-        complaint
+        complaint,
+        date
     });
 
-    newComplaint.save().then(()=>{
+    newComplaint.save()
+    .then(()=>{
         res.json("Complaint Added")
     }).catch((err)=>{
         console.log(err);
@@ -68,13 +71,14 @@ router.route("/updateComplaint/:id").put(async(req, res)=>{
 ///////////////////////////////////////////////////////Delete///////////////////////////////////////////////////////////////////
 
 router.route("/deleteComplaint/:id").delete(async(req, res) => {
-    let tourID = req.params.id;
-    await Complaint.findByIdAndDelete({tourID})
+    let del = req.params.id;
+    await Complaint.findByIdAndDelete(del)
     .then(() =>{
         res.status(200).send({status: "Complaint deleted"});
+        res.json("Complaint deleted!");
     }).catch((err)=>{
         console.log(err.message);
-        res.status(500).send({status: "Eror with delete complaint", error: err.message})
+        res.status(500).send({status: "Error with delete complaint", error: err.message})
     });
 });
 

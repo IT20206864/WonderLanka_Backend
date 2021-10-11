@@ -12,7 +12,7 @@ router.route('/').get((req, res) => {
 router.route('/add').post((req, res) => {
   const vtype = req.body.vtype;
   const vname = req.body.vname;
-  const vid = Number(req.body.vid);
+  const vid = req.body.vid;
   const date = Date.parse(req.body.date);
   const vnumber = req.body.vnumber;
 
@@ -49,7 +49,7 @@ router.route('/update/:id').post((req, res) => {
     .then(vehicle => {
       vehicle.vtype = req.body.vtype;
       vehicle.vname = req.body.vname;
-      vehicle.vid = Number(req.body.vid);
+      vehicle.vid = req.body.vid;
       vehicle.date = Date.parse(req.body.date);
       vehicle.vnumber = req.body.vnumber;
 
@@ -59,5 +59,17 @@ router.route('/update/:id').post((req, res) => {
     })
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
+  //Getting Details of one Vehicle by Name
+
+router.route("/getbyName/:name").get(async (req,res) =>{
+  let vehicleName = req.params.name;
+  const vehicle = await Vehicle.findOne({vname : vehicleName}).then((data) =>{
+    res.json(data);
+  }).catch((err) =>{
+    console.log(err.message);
+  })
+})
+
 
 module.exports = router;

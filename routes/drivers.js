@@ -9,7 +9,7 @@ router.route("/add").post((req,res)=>{
     const firstname=req.body.firstname;
     const lastname=req.body.lastname;
     const email=req.body.email;
-    const phonenumber=Number(req.body.phonenumber);
+    const phonenumber=req.body.phonenumber;
     const licenseid=req.body.licenseid;
     const languages=req.body.languages;
 
@@ -37,34 +37,47 @@ router.route('/details').get((req, res) => {
       .catch(err => res.status(400).json('Error: ' + err));
   });
 //update driver
-router.route('/update/:id').post((req, res) => {
-    Driver.findById(req.params.id)
-      .then(driver => {
-        driver.driverid=req.body.driverid;
-        driver.firstname = req.body.firstname;
-        driver.lastname = req.body.lastname;
-        driver.email = req.body.email;
-        driver.phonenumber = Number(req.body.phonenumber);
-        driver.licenseid = req.body.licenseid;
-        driver.languages = req.body.languages;
+router.route("/update/:id").put(async (req, res) => {
+  let driverId = req.params.id;
+  const {driverid, firstname, lastname, email, phonenumber, licenseid, languages } =
+    req.body;
 
-        driver.save()
-          .then(() => res.json('Driver updated!'))
-          .catch(err => res.status(400).json('Error: ' + err));
-      })
-      .catch(err => res.status(400).json('Error: ' + err));
-  });
-//delete driver
-router.route("/delete:id").delete(async(req,res) =>{
+  const updateDriver = {
+    driverid,
+    firstname,
+    lastname,
+    email,
+    phonenumber,
+    licenseid,
+    languages,
+  };
 
-    const driver = req.params.id;
-    await Driver.findByIdAndDelete(driver).then(()=>{
-        res.status(200).send({status : "Driver Deleted!"});
-    }).catch((err)=>{
-        console.log(err);
-        res.status(500).send({status:"Deletion unsuccesful!"});
+  const update = await Driver.findByIdAndUpdate(driverId, updateDriver)
+    .then(() => {
+      res.status(200).send({ status: "Driver Updated" });
     })
-})
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send({ status: "Error with updating data" });
+    });
+});
+
+
+//delete driver
+router.route("/delete/:id").delete(async (req, res) => {
+  let driverid = req.params.id;
+  console.log(driverid);
+  await Driver.findOneAndDelete({ driverid })
+    .then(() => {
+      res.status(200).send({ status: "Driver Deleted" });
+    })
+    .catch((err) => {
+      console.log(err.message);
+      res
+        .status(500)
+        .send({ status: "Error deleting Driver", error: err.message });
+    });
+});
 
 
 //get one driver details

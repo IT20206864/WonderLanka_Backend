@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const complaintSchema = new Schema({
+    id : {
+        type : String,
+        required:true
+    },
     name : {
         type : String,
         required : true
@@ -19,6 +23,10 @@ const complaintSchema = new Schema({
     },
     complaint : {
         type : String,
+        required : true
+    },
+    date : { 
+        type : Date,
         required : true
     }
 

@@ -1,16 +1,16 @@
 const router = require("express").Router();
-let Guide = require("../models/AssignedGuides");
+let Vehicle = require("../models/AssignedVehicle");
 
 
 router.post("/add" , (req,res)=>{
 
-  const assignedGuide = new Guide({
+  const assignedVehicle = new Vehicle({
 
     tourId : req.body.tid,
-    guideId : req.body.gid
+    vehicleID : req.body.vid
   })
-  assignedGuide.save().then(()=>{
-    res.json("Guide Assigned!");
+  assignedVehicle.save().then(()=>{
+    res.json("Vehicle Assigned!");
   }).catch((err)=>{
     console.log(err);
   })
@@ -19,7 +19,7 @@ router.post("/add" , (req,res)=>{
 
 router.route("/get/:tourId").get(async (req, res) => {
   const tourId = req.params.tourId;
-  await Guide.findOne({ tourId })
+  await Vehicle.findOne({ tourId })
     .then((data) => {
       res.json(data);
     })
@@ -29,7 +29,7 @@ router.route("/get/:tourId").get(async (req, res) => {
 });
 
 router.route("/").get((req,res) =>{
-  Guide.find().then((data)=>{
+    Vehicle.find().then((data)=>{
     res.json(data)
   }).catch((err) =>{
     console.log(err);
@@ -40,13 +40,12 @@ router.route("/").get((req,res) =>{
 
 router.route("/check/:tid").get(async(req,res) =>{
   const tid = req.params.tid;
-  await Guide.exists({tourId : tid}).then((data) =>{
+  await Vehicle.exists({tourId : tid}).then((data) =>{
     res.json(data);
     console.log(data);
   }).catch((err) =>{
     console.log(err);
   })
 })
-
 
 module.exports = router;
