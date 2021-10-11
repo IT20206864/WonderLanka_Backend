@@ -5,7 +5,7 @@ const { json } = require("express");
 //////////////////////////////////////////////////////////Add Complaint(create)////////////////////////////////////////////////
 
 router.route("/addComplaint").post((req,res)=>{
-    const tourID = req.body;
+
     const name = req.body.name;
     const email = req.body.email;
     const contact = Number(req.body.contact);
@@ -14,7 +14,7 @@ router.route("/addComplaint").post((req,res)=>{
     const date = req.body.date;
 
     const newComplaint = new Complaint({
-        tourID,
+
         name,
         email,
         contact,
@@ -44,7 +44,7 @@ router.route("/").get((req,res)=>{
 
 
 
-/////////////////////////////////////////////////Update////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////Update//////////////////////////////////////////////////////////////////////////
 
 router.route("/updateComplaint/:id").put(async(req, res)=>{
     let TourID = req.params.id;
