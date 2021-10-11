@@ -64,20 +64,16 @@ router.route("/update/:id").put(async (req, res) => {
 
 
 //delete driver
-router.route("/delete/:id").delete(async (req, res) => {
-  let driverid = req.params.id;
-  console.log(driverid);
-  await Driver.findOneAndDelete({ driverid })
-    .then(() => {
-      res.status(200).send({ status: "Driver Deleted" });
+router.route("/delete:id").delete(async(req,res) =>{
+    
+    const driver = req.params.id;
+    await Driver.findByIdAndDelete(driver).then(()=>{
+        res.status(200).send({status : "Driver Deleted!"});
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"Deletion unsuccesful!"});
     })
-    .catch((err) => {
-      console.log(err.message);
-      res
-        .status(500)
-        .send({ status: "Error deleting Driver", error: err.message });
-    });
-});
+})
 
 
 //get one driver details

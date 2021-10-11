@@ -55,6 +55,17 @@ router.route("/update/:id").put(async (req, res) => {
   });
   
   
+  //delete driver
+  router.route("/delete:id").delete(async(req,res) =>{
+      
+      const driver = req.params.id;
+      await Driver.findByIdAndDelete(driver).then(()=>{
+          res.status(200).send({status : "Driver Deleted!"});
+      }).catch((err)=>{
+          console.log(err);
+          res.status(500).send({status:"Deletion unsuccesful!"});
+      })
+  })
 
 
 //delete employee
