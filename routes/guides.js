@@ -99,6 +99,18 @@ router.route("/get/:id").get(async (req, res) => {
     });
 });
 
+router.route("/getById/:id").get(async(req,res)=>{
+  const id = req.params.id;
+  const itin = await Guide.findById(id).then((data)=>{
+      res.json(data);
+      
+      
+  }).catch((err)=>{
+      res.status(500).send({status : "Fetching unsuccesful!"});
+  })
+})
+
+
 //Getting Details of one Guide by Name
 
 router.route("/getbyName/:name").get(async (req, res) => {
