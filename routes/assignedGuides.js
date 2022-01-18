@@ -6,7 +6,7 @@ router.post("/add" , (req,res)=>{
 
   const assignedGuide = new Guide({
 
-    tourId : req.body.tid,
+    tourId : req.body.tide,
     guideId : req.body.gid
   })
   assignedGuide.save().then(()=>{
